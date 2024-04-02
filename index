@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="http://10.144.92.206/omboard/common/css/swiper.min.css">
+  <script type="text/javascript" src="http://10.144.92.206/omboard/common/jquery-3.1.1.js"></script> 
+  <script type="text/javascript" src="http://10.144.92.206/omboard/common/swiper.min.js"></script> 
+  <style>
+    *{
+      margin: 0;padding: 0;
+    }
+  
+    li,ul{
+      list-style: none;
+	  overflow: hidden;
+    }
+    li{
+      display:inline-block;
+      width: 33%;
+      height: 50px;
+      line-height: 50px;
+      text-align: center;
+	  border:1px solid red;
+    }
+    .active{
+      color: red;
+    }
+    .swiper-container{
+      height: calc(100vh - 50px);
+    }
+    .swiper-slide{
+      overflow-y: scroll;
+    }
+  </style>
+</head>
+<body>
+  <ul>
+    <li class="active">首页</li>
+    <li>发现</li>
+    <li>用户</li>
+  </ul>
+  <div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide" style="background: red">
+           
+        </div>
+        <div class="swiper-slide" style="background: yellow">
+          
+        </div>
+        <div class="swiper-slide" style="background: pink">
+          
+        </div>
+    </div>
+  </div>
+  
+  
+  
+  <script>
+      $('li').each(function(e) {
+        var index = $(this).index();
+        $(this).click(function() {
+          $(this).addClass('active').siblings().removeClass('active')
+          mySwiper.slideTo(index);
+        })
+      })
+ 
+      var mySwiper = new Swiper ('.swiper-container', {
+        loop: false, // 循环模式选项
+        on: {
+          slideChange: function () {
+             $('li').eq(this.activeIndex).addClass('active').siblings().removeClass('active')
+          },
+        }
+      })
+	  
+function getWeek(){  	  
+	var current_date = new Date();                                //  当天日期
+	
+	var current_year=current_date.getFullYear(); //年份(4位)
+	var first_day=new Date(Date.parse(current_year+"-01-01"));    //  当年第一天转日期
+	
+	var days=Math.ceil((current_date-first_day)/(60*60*1000*24)); //  当年已过天数	
+	
+	var week_fst_day = first_day.getDay(); 
+	var fstday_weekday=week_fst_day==0?7:week_fst_day;            //   当年1月1日是周几
+	
+	var weeknum=null;
+	if(fstday_weekday<=4){
+		weeknum=Math.ceil((days+fstday_weekday-1)/7);               //1月1日当周第一天距离现在
+		console.log("小于等于周四",weeknum);
+	}else{
+		weeknum=Math.ceil(days-(7-fstday_weekday+1)/7);				  //1月1日下周第一天距离现在
+		console.log("大于等于周四",weeknum)
+	}
+	return weeknum;
+}  
+	  
+function fontSize(px) {  
+	let c = window.innerWidth || document.body.clientWidth; 
+	if (!c) {return 0;}
+	let fontSize = c / 1920;
+	return px * fontSize;
+}
+	  
+	  
+  </script>
+</body>
+</html>
